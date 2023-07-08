@@ -1,5 +1,70 @@
 ﻿@inherits LayoutComponentBase
+@inject NavigationManager NavigationManager
 
 <main>
+    <div class="w-full px-4 sm:px-6 lg:px-8">
+        <div class="relative flex items-center justify-between h-16">
+            <div class="flex items-center px-2 lg:px-0">
+                <div class="flex-shrink-0">
+                    <img class="h-8 w-8" src="/img/logo.svg" alt="Logo" />
+                </div>
+                <div class="hidden lg:block lg:ml-10">
+                    <div class="flex space-x-4">
+                        <a class="px-3 py-2 rounded-md text-sm font-medium text-white bg-gray-900" @onclick="NavigateToHome">Home</a>
+                        <a class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700" @onclick="NavigateToFeatures">Features</a>
+                        <a class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700" @onclick="NavigateToPricing">Pricing</a>
+                    </div>
+                </div>
+            </div>
+            <div class="block lg:hidden">
+                <button @onclick="ToggleDropdown" class="p-2 rounded-md inline-flex items-center justify-center text-gray-400 hover:text-white hover:bg-gray-700">
+                    <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+            @if (isDropdownOpen)
+            {
+                <div class="block lg:hidden">
+                    <div class="px-2 pt-2 pb-3 space-y-1">
+                        <a class="block px-3 py-2 rounded-md text-base font-medium text-white bg-gray-900" @onclick="NavigateToHome">Home</a>
+                        <a class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700" @onclick="NavigateToFeatures">Features</a>
+                        <a class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700" @onclick="NavigateToPricing">Pricing</a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    @code {
+        private bool isDropdownOpen = false;
+
+        private void ToggleDropdown()
+        {
+            isDropdownOpen = !isDropdownOpen;
+        }
+
+        private void NavigateTo(string page)
+        {
+            NavigationManager.NavigateTo($"/{page}");
+            isDropdownOpen = false;
+        }
+
+        private void NavigateToHome()
+        {
+            NavigateTo("");
+        }
+
+        private void NavigateToFeatures()
+        {
+            NavigateTo("Features");
+        }
+
+        private void NavigateToPricing()
+        {
+            NavigateTo("Pricing");
+        }
+    }
+
     @Body
 </main>
